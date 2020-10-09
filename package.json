@@ -1,0 +1,26 @@
+{
+  "name": "teamcity-server-instance",
+  "version": "1.0.0",
+  "description": "Team city docker scripts",
+  "main": "index.js",
+  "author": "Zach Robichaud",
+  "license": "MIT",
+  "private": true,
+  "serverUrl": "localhost",
+  "serverPort": "8111",
+  "baseDir": "~/teamcity_server",
+  "maps": {
+    "conf": "$npm_package_baseDir/conf",
+    "logs": "$npm_package_baseDir/logs",
+    "datadir": "$npm_package_baseDir/datadir"
+  },
+  "scripts": {
+    "docker:run": "docker run -it -e SERVER_URL=\"192.168.1.21:8111\"  -v ~/teamcity_server/conf:/opt/teamcity/conf",
+    "agent": "yarn docker:run --name=teamcity-agent jetbrains/teamcity-agent",
+    "tc:install": "docker run -it --name teamcity-server-instance -v $npm_package_maps_datadir:/data/teamcity_server/datadir -v $npm_package_maps_logs:/opt/teamcity/logs  -p $npm_package_serverPort:8111 jetbrains/teamcity-server",
+    "ps": "docker ps --filter name='teamcity.*'",
+    "start": "docker start $npm_package_name",
+    "stop": "docker stop $npm_package_name",
+    "ssh": "docker run $npm_package_name bash"
+  }
+}
