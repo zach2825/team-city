@@ -1,6 +1,6 @@
 # [Team city](https://www.jetbrains.com/teamcity/)
 
-![Team city](./imagees/teamcity-283674.png)
+![Team city](./images/teamcity-283674.png)
 
 This is just a collection of scripts for starting team city locally. 
 
