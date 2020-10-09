@@ -20,7 +20,6 @@
     "tc:install": "docker run -it --name teamcity-server-instance -v $npm_package_maps_datadir:/data/teamcity_server/datadir -v $npm_package_maps_logs:/opt/teamcity/logs  -p $npm_package_serverPort:8111 jetbrains/teamcity-server",
     "ps": "docker ps --filter name='teamcity.*'",
     "start": "docker start $npm_package_name",
-    "stop": "docker stop $npm_package_name",
-    "ssh": "docker run $npm_package_name bash"
+    "stop": "docker stop $npm_package_name"
   }
 }
