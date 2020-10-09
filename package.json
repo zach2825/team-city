@@ -8,18 +8,20 @@
   "private": true,
   "serverUrl": "localhost",
   "serverPort": "8111",
-  "baseDir": "~/teamcity_server",
-  "maps": {
-    "conf": "$npm_package_baseDir/conf",
-    "logs": "$npm_package_baseDir/logs",
-    "datadir": "$npm_package_baseDir/datadir"
-  },
+  "mapsConf": "/home/zach2825/teamcity_server/conf",
+  "mapsLogs": "/home/zach2825/teamcity_server/logs",
+  "mapsDatadir": "/home/zach2825/teamcity_server/datadir",
   "scripts": {
-    "docker:run": "docker run -it -e SERVER_URL=\"192.168.1.21:8111\"  -v ~/teamcity_server/conf:/opt/teamcity/conf",
-    "agent": "yarn docker:run --name=teamcity-agent jetbrains/teamcity-agent",
-    "tc:install": "docker run -it --name teamcity-server-instance -v $npm_package_maps_datadir:/data/teamcity_server/datadir -v $npm_package_maps_logs:/opt/teamcity/logs  -p $npm_package_serverPort:8111 jetbrains/teamcity-server",
-    "ps": "docker ps --filter name='teamcity.*'",
-    "start": "docker start $npm_package_name",
-    "stop": "docker stop $npm_package_name"
+    "mkdirs": "mkdir -p mapsConf && mkdir -p mapsLogs && mkdir -p mapsDatadir",
+    "tc:install-agent": "docker run -it -e SERVER_URL=$npm_package_serverUrl:$npm_package_serverPort -v $npm_package_mapsConf:/opt/teamcity/conf --name=teamcity-agent jetbrains/teamcity-agent",
+    "tc:install": "docker run -it -p $npm_package_serverPort:8111 --name teamcity-server-instance  -v $npm_package_mapsDatadir:/data/teamcity_server/datadir -v $npm_package_mapsLogs:/opt/teamcity/logs jetbrains/teamcity-server",
+    "cleanup": "yarn stop; echo 'Clean out team city stuff'; docker system prune --filter name='teamcity.*' --force",
+    "ps": "docker ps -a --filter name='teamcity.*'",
+    "start": "yarn start:tc; yarn start:agent",
+    "stop": "yarn stop:tc; yarn stop:agent",
+    "start:tc": "docker start $npm_package_name 2> /dev/null || echo '\r\n\r\nRUN INSTALLS FIRST\r\n\r\n'",
+    "stop:tc": "docker stop $npm_package_name",
+    "start:agent": "docker start teamcity-agent 2> /dev/null || echo '\n\nRUN INSTALLS FIRST\n\n'",
+    "stop:agent": "docker stop teamcity-agent"
   }
 }
