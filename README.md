@@ -1,4 +1,6 @@
-# Team city
+# [Team city](https://www.jetbrains.com/teamcity/)
+
+![Team city](./imagees/teamcity-283674.png)
 
 This is just a collection of scripts for starting team city locally. 
 
@@ -21,3 +23,6 @@ this will install and start the team city server. If you press ctrl+c it will st
 * Start the agent `yarn agent`
 * List the team city docker processes `yarn ps`
  
+## Links
+* https://www.jetbrains.com/teamcity/download/#section=docker
+* https://hub.docker.com/r/jetbrains/teamcity-server/
